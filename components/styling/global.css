@@ -170,3 +170,11 @@
     overflow: scroll !important;
     position: unset !important;
 }
+
+/* .leaflet-layer {
+    filter: hue-rotate(180deg) invert(90%) brightness(120%) !important;
+} */
+
+.leaflet-marker-icon {
+    filter: hue-rotate(360deg) brightness(120%) saturate(150%) !important;
+}

@@ -6,18 +6,19 @@ import * as Icons from '@mdi/js';
 
 import { Modal } from './Modal';
 import { LatLng } from 'leaflet';
-import { useKeyPress } from '../hooks';
 import { BuildingCode } from '@ilefa/husky';
 import { DiningHallType } from '@ilefa/blueplate';
+import { useKeyPress, useLocalStorage } from '../hooks';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { BuildingAddresses, BuildingDescriptions, capitalizeFirst } from '../util';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from 'react-leaflet';
+import { BuildingAddresses, BuildingDescriptions, capitalizeFirst, ResidenceHallType } from '../util';
 
 import {
     mdiAlphabeticalVariant,
     mdiChairSchool,
     mdiClockTimeThree,
     mdiFoodForkDrink,
+    mdiHomeCity,
     mdiMapMarker,
     mdiTownHall
 } from '@mdi/js';
@@ -42,12 +43,13 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 
-type BuildingType = 'academic' | 'residential' | 'dining' | 'other';
+type BuildingType = 'academic' | 'residential' | 'dining' | 'athletics' | 'poi' | 'other';
 
 enum BuildingColorType {
     ACADEMIC = 'text-primary',
     RESIDENTIAL = 'text-green',
     DINING = 'text-warning',
+    POI = 'text-purple',
     OTHER = 'text-gray'
 }
 
@@ -75,6 +77,7 @@ type MarkerProps = {
     address: string | keyof typeof BuildingAddresses;
     classroomPrefixes?: string[];
     diningHallType?: string;
+    residenceHallType?: string;
     hours?: MarkerHours[];
 }
 
@@ -88,10 +91,13 @@ const Map = () => {
     const [entries, setEntries] = useState<(MarkerProps | PartialMarkerProps)[]>([]);
     const [modal, setModal] = useState<MarkerProps | PartialMarkerProps>(null);
     const [fileModal, setFileModal] = useState(false);
+    const [store, setStore] = useLocalStorage('store', entries);
 
     const fileSignal = useKeyPress('<');
     const saveSignal = useKeyPress('>');
 
+    useEffect(() => store && setEntries(JSON.parse(store)), []);
+    useEffect(() => setStore(JSON.stringify(entries)), [entries]);
     useEffect(() => fileSignal && setFileModal(true), [fileSignal]);
     useEffect(() => !modal && !fileModal && saveSignal && download(JSON.stringify(entries, null, 3), 'cartographer.json'), [saveSignal]);
     useEffect(() => {
@@ -128,6 +134,8 @@ const Map = () => {
         academic: new LeafIcon({ iconUrl: '/pins/blue-small.png' }),
         residential: new LeafIcon({ iconUrl: '/pins/green-small.png' }),
         dining: new LeafIcon({ iconUrl: '/pins/orange-small.png' }),
+        athletics: new LeafIcon({ iconUrl: '/pins/red-small.png' }),
+        poi: new LeafIcon({ iconUrl: '/pins/purple-small.png' }),
         other: new LeafIcon({ iconUrl: '/pins/gray-small.png' })
     }
 
@@ -145,33 +153,35 @@ const Map = () => {
 
             <MapHandlers entries={entries} clicked={clicked} setClicked={setClicked} setEntries={setEntries} setModal={setModal} />
 
-            {
-                entries.map(ent => (
-                    <Marker
-                        key={ent.position.lat + ent.position.lng}
-                        position={[ent.position.lat, ent.position.lng]}
-                        draggable
-                        icon={icons[(ent as MarkerProps).type ?? 'other']}
-                        eventHandlers={{
-                            dragend: e => update<LatLng>(ent.position, 'position', e.target.getLatLng())
-                        }}
-                    >
-                        <Popup>
-                            <span className={`${BuildingColorType[or<BuildingType>(ent, 'type', 'other').toUpperCase()]} font-weight-bold`}>[{capitalizeFirst(or<BuildingType>(ent, 'type', 'other'))}]</span> <b>{or<string>(ent, 'name', 'Unknown Marker')}</b> at <span className="text-green">{formatLatLng(ent.position)}</span>
-                            <br /> <div className="mt-3 mb--3"><pre className="text-primary">{JSON.stringify(ent, null, 3)}</pre></div><br />
-                            <div className="">
-                                <span className="text-primary cursor-pointer shine mr-2" onClick={_ => {
-                                    setModal(ent);
-                                }}>edit</span>{" "}
-                                <span className="text-danger cursor-pointer shine" onClick={_ => {
-                                    setEntries(entries.filter(item => item.position !== ent.position));
-                                    setClicked(null);
-                                }}>remove</span>
-                            </div>
-                        </Popup>
-                    </Marker>
-                ))
-            }
+            <div className="no-filter">
+                {
+                    entries.map(ent => (
+                        <Marker
+                            key={ent.position.lat + ent.position.lng}
+                            position={[ent.position.lat, ent.position.lng]}
+                            draggable
+                            icon={icons[(ent as MarkerProps).type ?? 'other']}
+                            eventHandlers={{
+                                dragend: e => update<LatLng>(ent.position, 'position', e.target.getLatLng())
+                            }}
+                        >
+                            <Popup>
+                                <span className={`${BuildingColorType[or<BuildingType>(ent, 'type', 'other').toUpperCase()]} font-weight-bold`}>[{capitalizeFirst(or<BuildingType>(ent, 'type', 'other'))}]</span> <b>{or<string>(ent, 'name', 'Unknown Marker')}</b> at <span className="text-green">{formatLatLng(ent.position)}</span>
+                                <br /> <div className="mt-3 mb--3"><pre className="text-primary">{JSON.stringify(ent, null, 3)}</pre></div><br />
+                                <div className="">
+                                    <span className="text-primary cursor-pointer shine mr-2" onClick={_ => {
+                                        setModal(ent);
+                                    }}>edit</span>{" "}
+                                    <span className="text-danger cursor-pointer shine" onClick={_ => {
+                                        setEntries(entries.filter(item => item.position !== ent.position));
+                                        setClicked(null);
+                                    }}>remove</span>
+                                </div>
+                            </Popup>
+                        </Marker>
+                    ))
+                }
+            </div>
 
             {
                 fileModal && (
@@ -300,10 +310,16 @@ const MarkerHoursEditorModal: React.FC<MarkerHoursEditorModalProps> = ({ open, s
                     </span>
                     <span
                         className={`btn btn-link text-lowercase ml--28`}
-                        onClick={() => Object.keys(DayType).forEach((_, i) => {
-                            update<string>(i, 'open', null);
-                            update<string>(i, 'close', null);
-                        })}>
+                        onClick={() => {
+                            Object
+                                .keys(DayType)
+                                .forEach((_, i) => {
+                                    update<string>(i, 'open', null);
+                                    update<string>(i, 'close', null);
+                                });
+
+                            setOpen(false);
+                        }}>
                             <i className={`fa fa-history fa-fw`}></i> reset all
                     </span>
                 </>
@@ -372,6 +388,7 @@ const MarkerEditorModal: React.FC<MarkerEditorModalProps> = ({ open, setOpen, co
         type: or<BuildingType>(marker, 'type'),
         classroomPrefixes: or<string[]>(marker, 'classroomPrefixes', []),
         diningHallType: or<string>(marker, 'diningHallType'),
+        residenceHallType: or<string>(marker, 'residenceHallType'),
         hours: or<MarkerHours[]>(marker, 'hours')
     });
 
@@ -483,7 +500,7 @@ const MarkerEditorModal: React.FC<MarkerEditorModalProps> = ({ open, setOpen, co
                         <Col md="6">
                             <UncontrolledDropdown className="dropdown-width">
                                 <DropdownToggle caret color="white" className="text-capitalize text-left shadow-none dropdown-button dropdown-width dropdown-placeholder">
-                                    <MdiIcon path={mdiTownHall} size="20px" className="fa-fw vaSub mr-2" /> {store.type ?? 'Building Type'}
+                                    <MdiIcon path={mdiTownHall} size="20px" className="fa-fw vaSub mr-2" /> {store.type ? store.type.length === 3 ? store.type.toUpperCase() : store.type : 'Building Type'}
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem href="#" className={store.type === 'academic' ? 'bg-primary text-white' : ''} onClick={() => update<BuildingType>('type', 'academic')}>
@@ -495,6 +512,12 @@ const MarkerEditorModal: React.FC<MarkerEditorModalProps> = ({ open, setOpen, co
                                     <DropdownItem href="#" className={store.type === 'dining' ? 'bg-primary text-white' : ''} onClick={() => update<BuildingType>('type', 'dining')}>
                                         Dining Hall
                                     </DropdownItem>
+                                    <DropdownItem href="#" className={store.type === 'athletics' ? 'bg-primary text-white' : ''} onClick={() => update<BuildingType>('type', 'athletics')}>
+                                        Athletics
+                                    </DropdownItem>
+                                    <DropdownItem href="#" className={store.type === 'poi' ? 'bg-primary text-white' : ''} onClick={() => update<BuildingType>('type', 'poi')}>
+                                        Point of Interest
+                                    </DropdownItem>
                                     <DropdownItem href="#" className={store.type === 'other' ? 'bg-primary text-white' : ''} onClick={() => update<BuildingType>('type', 'other')}>
                                         Miscellaneous
                                     </DropdownItem>
@@ -502,7 +525,7 @@ const MarkerEditorModal: React.FC<MarkerEditorModalProps> = ({ open, setOpen, co
                             </UncontrolledDropdown>
                         </Col>
                         {
-                            (store.type === 'academic' || store.type === 'dining') && (
+                            (store.type === 'academic' || store.type === 'dining' || store.type === 'residential') && (
                                 <Col md="6">
                                     <FormGroup>
                                         <InputGroup className="mb-4">
@@ -555,6 +578,28 @@ const MarkerEditorModal: React.FC<MarkerEditorModalProps> = ({ open, setOpen, co
                                                                         onClick={() => update<string>('diningHallType', code)}
                                                                     >
                                                                         {DiningHallType[code]}
+                                                                    </DropdownItem>       
+                                                                ))
+                                                            }
+                                                        </DropdownMenu>
+                                                    </UncontrolledDropdown>
+                                            }
+                                            {
+                                                store.type === 'residential' && 
+                                                    <UncontrolledDropdown className="dropdown-width">
+                                                        <DropdownToggle caret color="white" className="text-capitalize text-left shadow-none dropdown-button dropdown-width dropdown-placeholder">
+                                                            <MdiIcon path={mdiHomeCity} size="20px" className="fa-fw vaSub mr-2" /> Residence Hall Type
+                                                        </DropdownToggle>
+                                                        <DropdownMenu>
+                                                            {
+                                                                Object.keys(ResidenceHallType).map(code => (
+                                                                    <DropdownItem
+                                                                        key={code}
+                                                                        href="#"
+                                                                        className={store.residenceHallType === code ? 'bg-primary text-white' : ''}
+                                                                        onClick={() => update<string>('residenceHallType', code)}
+                                                                    >
+                                                                        {ResidenceHallType[code]}
                                                                     </DropdownItem>       
                                                                 ))
                                                             }

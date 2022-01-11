@@ -94,7 +94,28 @@ export enum BuildingAddresses {
     WSH = '234 Glenbrook Road, Unit 2011, Storrs CT 06269',
     WSRH = '626 Gilbert Road Ext., Storrs CT 06269',
     WTBY = '99 E Main St, Waterbury, CT 06702',
-    YNG = '1376 Storrs Road, Unit 4066, Storrs CT 06269'
+    YNG = '1376 Storrs Road, Unit 4066, Storrs CT 06269',
+
+    // Dorm addresses
+    ALUMNI = '632 Gilbert Road, Storrs CT 06269',
+    BUCKLEY = '1276 Storrs Road, Storrs CT 06269',
+    HILLTOP_HALLS = '2376 Alumni Drive, Storrs CT 06269',
+    MCMAHON = '2011 Hillside Road, Storrs CT 06269',
+    NORTH_CAMPUS = '82 N. Eagleville Road, Storrs CT 06269',
+    NORTHWEST_CAMPUS = '110 N. Eagleville Road, Storrs CT 06269',
+    SHIPPEE = '1288 Storrs Road, Storrs CT 06269',
+    EAST_CAMPUS = '1346 Storrs Road, Storrs CT 06269',
+    TOWERS = '3384 Towers Loop Road, Storrs CT 06269',
+    WERTH = '2378 Alumni Drive Storrs, CT 06269',
+    WEST_CAMPUS = '2016 Hillside Road, Storrs CT 06269',
+    BUSBY_SUITES = '917 Tower Court Road, Storrs CT 06269',
+    GARRIGUS_SUITES = '2374 Alumni Drive, Storrs CT 06269',
+    SOUTH_CAMPUS = '626 Gilbert Road Ext., Storrs CT 06269',
+    MANSFIELD_APARTMENTS = '1 S. Eagleville Road, Storrs CT 06269',
+    HUSKY_VILLAGE = 'Laurel Way, Storrs CT 06269',
+    CHARTER_OAK = '916 Tower Court Road, Storrs CT 06269',
+    HILLTOP_APTS = '2353 Alumni Drive, Storrs CT 06269',
+    NORTHWOOD_APTS = '1 Northwood Road, Storrs CT 06269',
 }
 
 export enum BuildingDescriptions {
@@ -145,7 +166,7 @@ export enum BuildingDescriptions {
     ITE = 'The Information Technologies Engineering Building (ITE) provides students and faculty in the School of Engineering with a high-tech, 350-seat auditorium, research labs, administrative and faculty offices, and a spacious atrium.',
     JONS = 'The Jones Building (JONS) houses the Nutritional Sciences department’s offices, research, and classroom space.',
     JRB = 'The Ryan Building (JRB) houses several offices as well as the Center for Health, Intervention, and Prevention and Center for Public Health and Health Policy.',
-    KEL = 'There is no description for this building.',
+    KEL = 'The Kellogg Dairy Center (KDC) is a modern free-stall facility capable of accommodating over 100 milking animals (Holstein and Jersey). The building is equipped with a Voluntary Milking System (VMS; robotic milking system) and robotic feeders. With robotic milkers, the cows decide when they want to be milked (2 to 6 times per day). There is an observation area where the public can watch milking in progress. In addition, the KDC contains a classroom, laboratory, surgical unit, and recovery room. Currently closed to the public due to the COVID-19 pandemic.',
     KLIN = 'The Klinck Building (KLIN) is a farm equipment storage facility.',
     KNS = 'The Department of Allied Health Sciences, offering degree programs in allied health, diagnostic genetic sciences, dietetics, and medical technology, is located in Koons Hall (KNH), named for Benjamin Franklin Koons. A professor and first President of the Storrs Agricultural College (1893-1898), Koons authorized the admission of the first women to the college.',
     LAFA = 'There is no description for this building.',
@@ -185,7 +206,28 @@ export enum BuildingDescriptions {
     WH = 'Home to the history department, Wood Hall (WH) has faculty offices and meeting rooms. The Office of Institutional Equity (OIE) and the Title IX Coordinator are also located on the main floor of Wood Hall.',
     WSH = 'Better known as the infirmary, Student Health Services (WSH) offers a wide range of services for students, including primary health care, mental health counseling, a laboratory, and a pharmacy. Specialized services include a women’s clinic, allergy clinic, nutritional counseling, health and wellness education, and substance abuse prevention education. shs.uconn.edu',
     WSRH = 'There is no description for this building.',
-    YNG = 'The Young Building (YNG) houses many classrooms and offices of the College of Agriculture, Health and Natural Resources.'
+    
+    // Dorm descriptions
+    YNG = 'The Young Building (YNG) houses many classrooms and offices of the College of Agriculture, Health and Natural Resources.',
+    ALUMNI = 'The Alumni Residence Halls (ARH) provide housing for students in four buildings – Belden Hall, Brock Hall, Eddy Hall, and Watson Hall. Several Learning Communities are located here as well – Leadership, Public Health House, and Business Connections. The Quadrangle also includes the J. Ray Ryan Building (JRB).',
+    BUCKLEY = 'Buckley Hall (BRH) houses first-year students in the University’s Honors Program as well as the Buckley resident dining unit.',
+    HILLTOP_HALLS = 'Consisting of two high-rise towers, Ellsworth and Hale Halls, Hilltop Residence Halls (HRH) provide student housing with its own resident dining hall, Putnam Refectory (PR), and a Grab & Go location known as HillStop, as well as an outdoor recreation area. ',
+    MCMAHON = 'McMahon Hall (MRH) has its own resident dining unit, piano lounge, and game room, and houses the EUROTECH and Global House Learning Communities.',
+    NORTH_CAMPUS = 'One of the largest residential communities on campus, North Campus Residence Halls (NCRH) offer traditional-style double rooms for about 1,400 students as well as a resident dining unit. Eight of the 11 dormitories in the quadrangle are named for the Connecticut counties of Hartford, New Haven, New London, Fairfield, Windham, Litchfield, Middlesex, and Tolland. The other three are named after former Connecticut Govs. Baldwin, McConaughy, and Hurley.',
+    NORTHWEST_CAMPUS = 'A quadrangle of traditional dormitories, Northwest Residence Halls (NWRH) primarily houses first-year students, many of whom are involved in community service, as well as first-year members of the Nursing Learning Community. Northwest consists of Hanks, Goodyear, Russell, Batterson, Terry, and Rogers Halls, which are named after 19th-century Connecticut industrialists. Northwest also has its own resident dining hall and a Grab & Go location known as West Side Wraps.',
+    SHIPPEE = 'Shippee Hall (SPRH) houses members of the Fine Arts Learning Community and Connecting With the Arts Learning Community.',
+    EAST_CAMPUS = 'East Campus Residence Halls (ECRH) comprise two building clusters, with three facilities on the north end – Holcomb (MHRH), Whitney (WRH), and Sprague (SRH) Halls – and two more on the south end of campus – Grange (GERH) and Hicks (EHRH) Halls.',
+    TOWERS = 'Towers (TRH) has its own dining hall, Gelfenbein Commons (GC), a community center, and 16 buildings, known as Allen, Beecher, Colt, Fenwick, Hamilton, Jefferson, Keller, Kingston, Lafayette, Morgan, Sherman, Sousa, Trumbull, Vinton, Wade, and Webster.',
+    WERTH = 'Peter J. Werth Residence Tower opened as Next Generation Connecticut Hall in fall 2016 and houses 727 students. It is home to eight Learning Communities: EcoHouse, Engineering House, Eurotech House, Honors to Opportunities (H2O), Innovation House, Public Health House, ScHOLA²RS House, and WiMSE House. The first completed major project of the Next Generation Connecticut initiative, this residence hall features an "Innovation Zone" with a two-story maker space; a green roof; 3D printers, scanners, and other design tools; work stations; event space; a game room and living room; gallery walls; community lounges; and an idea lab.',
+    WEST_CAMPUS = 'West Campus (WCRH) features traditional-style dorms with six buildings – Alsop, Chandler, Hollister, Lancaster, Shakespeare, and Troy. The EcoHouse Learning Community is located in Hollister Hall.',
+    BUSBY_SUITES = 'Busby Suites (BSRH) comprise a four-floor building with 232 bedrooms. Busby Suites are set up with two large rooms housing three students each, connected by a common bathroom.',
+    GARRIGUS_SUITES = 'The Harry Lucian Garrigus Suites (GSRH) include two large three-person bedrooms connected by a private bathroom and a limited number of single rooms sharing a bathroom.',
+    SOUTH_CAMPUS = 'South Campus (SCRH) consists of three state-of-the-art residence halls, a resident dining unit that includes a Grab & Go location called Millie & Maude’s, and a central commons building, known as Rome Commons (ROME). The buildings are named after the first female students to attend UConn – Nellie Louise Wilson Hall, Louisa Jane Rosebrooks Hall, and Anna Mabel Snow Hall.',
+    MANSFIELD_APARTMENTS = 'Mansfield Apartments (MA) have two-bedroom apartments with a kitchen, living room, and dining room. These are serviced by the University’s free shuttle buses.',
+    HUSKY_VILLAGE = 'A complex of six buildings, Husky Village (HV) houses 300 members of the University’s community of fraternities and sororities.',
+    CHARTER_OAK = 'Each of the Charter Oak Apartments (COA) in this seven-building student housing complex features a kitchen, furnished living room, bathroom, laundry room, and air-conditioning.',
+    HILLTOP_APTS = 'A 14-building complex, Hilltop Apartments (HAC) offer a range of living options. Each fully furnished apartment includes a living room, bathroom, kitchen, dining area, and laundry room. The apartments accommodate approximately 1,200 students. The apartments are named after notable women Ella Grasso, Harriet Beecher Stowe, Antonia Novello, Mildred French, Mary Ritter Beard, Susette LaFlesche, Prudence Crandall, Mary McLeod Bethune, Alice Pattison Merritt, Chien-Shiung Wu, Maude Knapp Wheeler, Sara Buek Crawford, and Chase Going Woodhouse.',
+    NORTHWOOD_APTS = 'Northwood Apartments (NWA), located just off campus on North Eagleville Road, house graduate students and are serviced by the University’s free bus shuttles.'
 }
 
 export enum BuildingMaps {
@@ -285,4 +327,26 @@ export enum BuildingMaps {
     WSRH = 'https://www.google.com/maps/place/Nellie+Louise+Wilson+Residence+Hall,+Storrs,+CT+06269/@41.8048368,-72.2494434,17z/data=!3m1!4b1!4m5!3m4!1s0x89e68a232519ae45:0x9b4d4d877e73787c!8m2!3d41.8048328!4d-72.2472494',
     WTBY = 'https://www.google.com/maps/place/UConn+Waterbury/@41.5556878,-73.0407838,17z/data=!3m2!4b1!5s0x89e7c10049574865:0x8fc21328f06903b8!4m5!3m4!1s0x89e7c10036940b05:0x664b6276ac19291c!8m2!3d41.5556838!4d-73.0385898',
     YNG = 'https://www.google.com/maps/place/Wilfred+B.Young+Bldg,+Storrs,+CT+06269/@41.8121557,-72.2504963,17z/data=!3m1!4b1!4m5!3m4!1s0x89e68a3002f0b9c5:0x86e6604eb51a5236!8m2!3d41.8121517!4d-72.2483023'
+}
+
+export enum ResidenceHallType {
+    ALUMNI = 'Alumni',
+    BUCKLEY = 'Buckley',
+    HILLTOP_HALLS = 'Hilltop Halls',
+    MCMAHON = 'McMahon',
+    NORTH_CAMPUS = 'North Campus',
+    NORTHWEST_CAMPUS = 'Northwest Campus',
+    SHIPPEE = 'Shippee',
+    EAST_CAMPUS = 'East Campus',
+    TOWERS = 'Towers',
+    WERTH = 'Werth',
+    WEST_CAMPUS = 'West Campus',
+    BUSBY_SUITES = 'Busby Suites',
+    GARRIGUS_SUITES = 'Garrigus Suites',
+    SOUTH_CAMPUS = 'South Campus',
+    MANSFIELD_APARTMENTS = 'Mansfield Apartments',
+    HUSKY_VILLAGE = 'Husky Village',
+    CHARTER_OAK = 'Charter Oak',
+    HILLTOP_APTS = 'Hilltop Apts',
+    NORTHWOOD_APTS = 'Northwood Apts',
 }
